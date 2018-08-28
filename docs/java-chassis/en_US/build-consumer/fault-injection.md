@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ## Scene Description
 
 The user uses fault injection on the consumer side to set the delay and error of the request to the specified microservice and its trigger probability.
@@ -8,6 +9,18 @@ The delay time for delay injection requests is unified to the millisecond level.
 
 ## Configuration instructions
 
+=======
+## Fault Injection
+### Scenario
+The user via fault injection on the consumer side to set the delay and error of the request to the specified microservice and its trigger probability.
+
+## Precautions
+
+The delay time for delay injection requests is unified to the millisecond level.
+
+## Configuration instructions
+
+>>>>>>> scdoc
 The fault injection configuration is in the microservice.yaml file. The related configuration items are shown in the following table. To enable fault injection in the service consumer, you need to configure the consumer fault injection handler in the processing chain. The configuration example is as follows:
 
 ```yaml

@@ -159,82 +159,25 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="development-guide">Development Guide</h1>
-<p>This chapter is about how to implement the feature of micro-service discovery with ServiceCenter,
-and you can get more detail at <a href="server/core/swagger/v3.yaml">here</a></p>
-<h2 id="micro-service-registration">Micro-service registration</h2>
-<pre><code class="lang-bash">curl -X POST \
-  http://127.0.0.1:30100/registry/v3/microservices \
-  -H <span class="hljs-string">&apos;content-type: application/json&apos;</span> \
-  -H <span class="hljs-string">&apos;x-domain-name: default&apos;</span> \
-  <span class="hljs-_">-d</span> <span class="hljs-string">&apos;{
-    &quot;service&quot;:
-    {
-        &quot;appId&quot;: &quot;default&quot;,
-        &quot;serviceName&quot;: &quot;DemoService&quot;,
-        &quot;version&quot;:&quot;1.0.0&quot;
-    }
-}&apos;</span>
-</code></pre>
-<p>and then you can get the &apos;DemoService&apos; ID like below:</p>
-<pre><code class="lang-json">{
-    <span class="hljs-string">&quot;serviceId&quot;</span>: <span class="hljs-string">&quot;a3fae679211211e8a831286ed488fc1b&quot;</span>
-}
-</code></pre>
-<h2 id="instance-registration">Instance registration</h2>
-<p>mark down the micro-service ID and call the instance registration API,
-according to the ServiceCenter definition: One process should be registered as one instance</p>
-<pre><code class="lang-bash">curl -X POST \
-  http://127.0.0.1:30100/registry/v3/microservices/a3fae679211211e8a831286ed488<span class="hljs-built_in">fc</span>1b/instances \
-  -H <span class="hljs-string">&apos;content-type: application/json&apos;</span> \
-  -H <span class="hljs-string">&apos;x-domain-name: default&apos;</span> \
-  <span class="hljs-_">-d</span> <span class="hljs-string">&apos;{
-    &quot;instance&quot;: 
-    {
-        &quot;hostName&quot;:&quot;demo-pc&quot;,
-        &quot;endpoints&quot;: [
-            &quot;rest://127.0.0.1:8080&quot;
-        ]
-    }
-}&apos;</span>
-</code></pre>
-<p>the successful response like below:</p>
-<pre><code class="lang-json">{
-    <span class="hljs-string">&quot;instanceId&quot;</span>: <span class="hljs-string">&quot;288ad703211311e8a831286ed488fc1b&quot;</span>
-}
-</code></pre>
-<p>if all are successful, it means you have completed the micro-service registration and instance publish</p>
-<h2 id="discovery">Discovery</h2>
-<p>the next step is that discovery the micro-service instance by service name and version rule</p>
-<pre><code class="lang-bash">curl -X GET \
-  <span class="hljs-string">&apos;http://127.0.0.1:30100/registry/v3/instances?appId=default&amp;serviceName=DemoService&amp;version=latest&apos;</span> \
-  -H <span class="hljs-string">&apos;content-type: application/json&apos;</span> \
-  -H <span class="hljs-string">&apos;x-consumerid: a3fae679211211e8a831286ed488fc1b&apos;</span> \
-  -H <span class="hljs-string">&apos;x-domain-name: default&apos;</span>
-</code></pre>
-<p>here, you can get the information from the response</p>
-<pre><code class="lang-json">{
-    <span class="hljs-string">&quot;instances&quot;</span>: [
-        {
-            <span class="hljs-string">&quot;instanceId&quot;</span>: <span class="hljs-string">&quot;b4c9e57f211311e8a831286ed488fc1b&quot;</span>,
-            <span class="hljs-string">&quot;serviceId&quot;</span>: <span class="hljs-string">&quot;a3fae679211211e8a831286ed488fc1b&quot;</span>,
-            <span class="hljs-string">&quot;version&quot;</span>: <span class="hljs-string">&quot;1.0.0&quot;</span>,
-            <span class="hljs-string">&quot;hostName&quot;</span>: <span class="hljs-string">&quot;demo-pc&quot;</span>,
-            <span class="hljs-string">&quot;endpoints&quot;</span>: [
-                <span class="hljs-string">&quot;rest://127.0.0.1:8080&quot;</span>
-            ],
-            <span class="hljs-string">&quot;status&quot;</span>: <span class="hljs-string">&quot;UP&quot;</span>,
-            <span class="hljs-string">&quot;healthCheck&quot;</span>: {
-                <span class="hljs-string">&quot;mode&quot;</span>: <span class="hljs-string">&quot;push&quot;</span>,
-                <span class="hljs-string">&quot;interval&quot;</span>: <span class="hljs-number">30</span>,
-                <span class="hljs-string">&quot;times&quot;</span>: <span class="hljs-number">3</span>
-            },
-            <span class="hljs-string">&quot;timestamp&quot;</span>: <span class="hljs-string">&quot;1520322915&quot;</span>,
-            <span class="hljs-string">&quot;modTimestamp&quot;</span>: <span class="hljs-string">&quot;1520322915&quot;</span>
-        }
-    ]
-}
-</code></pre>
+                                <h2 id="service-center-design">Service-Center Design</h2>
+<p>Service-Center(SC) is a service registry that allows services to register their instance information and to discover providers of a given service.
+SC uses etcd to store all the information of micro-service and its instances. Below is the diagram stating the working principles and flow of SC.</p>
+<h4 id="on-startup">On StartUp</h4>
+<p>Here we assume that micro-services are written using <a href="https://github.com/ServiceComb/java-chassis" target="_blank">java-chassis</a> sdk. So when micro-service boots up then java-chassis sdk does the following list of tasks.</p>
+<ol>
+<li>On startup provider registers the micro-service to SC if not registered earlier and also register its instance information like its Ip and Port on which instance is running.</li>
+<li>SC stores the provider information in etcd.</li>
+<li>On startup consumer retrieves the list of all provider instance from SC using the micro-service name of the provider.</li>
+<li>Consumer sdk stores all the information of provider instances in its cache.</li>
+<li>Consumer sdk creates a web socket connection to SC to watch all the provider instance information, if there is any change in the provider then sdk updates it&apos;s cache information.</li>
+</ol>
+<p><img src="static_files/onStartup.PNG" alt="Onstartup"></p>
+<h4 id="communication-between-consumer---provider">Communication between Consumer -&gt; Provider</h4>
+<p>Once the bootup is successful then the consumer can communicate with providers flawlessly, below is the diagram illustrating the communication between provider and consumer.</p>
+<p><img src="static_files/communication.PNG" alt="Commuication"></p>
+<p>Provider instance regularly sends heartbeat signal every 30 seconds to SC, if SC does not receive the heartbeat for particular instance then the information in etcd expires and the provider instance information is removed.<br>Consumer watches the information of provider instances from SC and if there is any change then the cache is updated.<br>When Consumer needs to communicate to Provider then consumer reads endpoints of the provider instances from cache and do loadbalancing to communicate to Provider.</p>
+<p>Note: This document is in beta stage, feel free to contribute to this document.
+w</p>
 
                                 
                                 </section>
@@ -270,7 +213,7 @@ according to the ServiceCenter definition: One process should be registered as o
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Introduction","level":"1.1","depth":1,"dir":"ltr"},"config":{"plugins":[],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"language":"en_US","gitbook":"*"},"file":{"path":"README.md","mtime":"2018-08-27T09:25:44.826Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-08-27T09:29:27.859Z"},"basePath":".","book":{"language":"en_US"}});
+            gitbook.page.hasChanged({"page":{"title":"Introduction","level":"1.1","depth":1,"dir":"ltr"},"config":{"plugins":[],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"design.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"language":"en_US","gitbook":"*"},"file":{"path":"design.md","mtime":"2018-08-28T07:55:59.438Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-08-28T07:57:20.311Z"},"basePath":".","book":{"language":"en_US"}});
         });
     </script>
 </div>

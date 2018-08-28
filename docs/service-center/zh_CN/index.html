@@ -159,80 +159,22 @@
     
                                 <section class="normal markdown-section">
                                 
-                                <h1 id="&#x5F00;&#x53D1;&#x6307;&#x5357;">&#x5F00;&#x53D1;&#x6307;&#x5357;</h1>
-<p>&#x8FD9;&#x4E2A;&#x7AE0;&#x8282;&#x662F;&#x5173;&#x4E8E;&#x5982;&#x4F55;&#x57FA;&#x4E8E;&#x5B9E;&#x73B0;&#x5FAE;&#x670D;&#x52A1;&#x53D1;&#x73B0;&#x529F;&#x80FD;&#xFF0C;&#x4F60;&#x53EF;&#x4EE5;&#x627E;&#x5230;&#x66F4;&#x591A;&#x7EC6;&#x8282; <a href="server/core/swagger/v3.yaml">here</a></p>
-<h2 id="micro-service&#x6CE8;&#x518C;">Micro-service&#x6CE8;&#x518C;</h2>
-<pre><code class="lang-bash">curl -X POST \
-  http://127.0.0.1:30100/registry/v3/microservices \
-  -H <span class="hljs-string">&apos;content-type: application/json&apos;</span> \
-  -H <span class="hljs-string">&apos;x-domain-name: default&apos;</span> \
-  <span class="hljs-_">-d</span> <span class="hljs-string">&apos;{
-    &quot;service&quot;:
-    {
-        &quot;appId&quot;: &quot;default&quot;,
-        &quot;serviceName&quot;: &quot;DemoService&quot;,
-        &quot;version&quot;:&quot;1.0.0&quot;
-    }
-}&apos;</span>
-</code></pre>
-<p>&#x8FD9;&#x65F6;&#x5019;&#x4F60;&#x53EF;&#x4EE5;&#x989D;&#x83B7;&#x53D6;&apos;DemoService&apos;&#x7684;ID&#xFF0C;&#x5982;&#x4E0B;&#xFF1A;</p>
-<pre><code class="lang-json">{
-    <span class="hljs-string">&quot;serviceId&quot;</span>: <span class="hljs-string">&quot;a3fae679211211e8a831286ed488fc1b&quot;</span>
-}
-</code></pre>
-<h2 id="&#x5B9E;&#x4F8B;&#x6CE8;&#x518C;">&#x5B9E;&#x4F8B;&#x6CE8;&#x518C;</h2>
-<p>&#x6807;&#x8BB0;micro-service ID&#x5E76;&#x8C03;&#x7528;&#x5B9E;&#x4F8B;&#x6CE8;&#x518C;API&#xFF0C;&#x6839;&#x636E;Service CeCube&#x5B9A;&#x4E49;&#xFF1A;&#x4E00;&#x4E2A;&#x8FDB;&#x7A0B;&#x5E94;&#x8BE5;&#x6CE8;&#x518C;&#x4E00;&#x4E2A;&#x5B9E;&#x4F8B;&#x3002;</p>
-<pre><code class="lang-bash">curl -X POST \
-  http://127.0.0.1:30100/registry/v3/microservices/a3fae679211211e8a831286ed488<span class="hljs-built_in">fc</span>1b/instances \
-  -H <span class="hljs-string">&apos;content-type: application/json&apos;</span> \
-  -H <span class="hljs-string">&apos;x-domain-name: default&apos;</span> \
-  <span class="hljs-_">-d</span> <span class="hljs-string">&apos;{
-    &quot;instance&quot;: 
-    {
-        &quot;hostName&quot;:&quot;demo-pc&quot;,
-        &quot;endpoints&quot;: [
-            &quot;rest://127.0.0.1:8080&quot;
-        ]
-    }
-}&apos;</span>
-</code></pre>
-<p>&#x54CD;&#x5E94;&#x6210;&#x529F;&#x5982;&#x4E0B;:</p>
-<pre><code class="lang-json">{
-    <span class="hljs-string">&quot;instanceId&quot;</span>: <span class="hljs-string">&quot;288ad703211311e8a831286ed488fc1b&quot;</span>
-}
-</code></pre>
-<p>&#x5982;&#x679C;&#x5168;&#x90E8;&#x6210;&#x529F;&#xFF0C;&#x610F;&#x5473;&#x7740;&#x4F60;&#x5DF2;&#x7ECF;&#x5B8C;&#x6210;&#x5FAE;&#x670D;&#x52A1;&#x7684;&#x6CE8;&#x518C;&#x4E8E;&#x5B9E;&#x4F8B;&#x7684;&#x53D1;&#x5E03;&#x3002;  </p>
-<h2 id="&#x670D;&#x52A1;&#x53D1;&#x73B0;">&#x670D;&#x52A1;&#x53D1;&#x73B0;</h2>
-<p>&#x4E0B;&#x4E00;&#x6B65;&#x662F;&#x6839;&#x636E;&#x670D;&#x52A1;&#x540D;&#x79F0;&#x548C;&#x7248;&#x672C;&#x89C4;&#x5219;&#x7684;&#x5FAE;&#x670D;&#x52A1;&#x5B9E;&#x4F8B;&#x53D1;&#x73B0;&#x3002;</p>
-<pre><code class="lang-bash">curl -X GET \
-  <span class="hljs-string">&apos;http://127.0.0.1:30100/registry/v3/instances?appId=default&amp;serviceName=DemoService&amp;version=latest&apos;</span> \
-  -H <span class="hljs-string">&apos;content-type: application/json&apos;</span> \
-  -H <span class="hljs-string">&apos;x-consumerid: a3fae679211211e8a831286ed488fc1b&apos;</span> \
-  -H <span class="hljs-string">&apos;x-domain-name: default&apos;</span>
-</code></pre>
-<p>&#x8FD9;&#x91CC;&#xFF0C;&#x4F60;&#x53EF;&#x4EE5;&#x4ECE;&#x54CD;&#x5E94;&#x4E2D;&#x83B7;&#x53D6;&#x4FE1;&#x606F;&#x3002;</p>
-<pre><code class="lang-json">{
-    <span class="hljs-string">&quot;instances&quot;</span>: [
-        {
-            <span class="hljs-string">&quot;instanceId&quot;</span>: <span class="hljs-string">&quot;b4c9e57f211311e8a831286ed488fc1b&quot;</span>,
-            <span class="hljs-string">&quot;serviceId&quot;</span>: <span class="hljs-string">&quot;a3fae679211211e8a831286ed488fc1b&quot;</span>,
-            <span class="hljs-string">&quot;version&quot;</span>: <span class="hljs-string">&quot;1.0.0&quot;</span>,
-            <span class="hljs-string">&quot;hostName&quot;</span>: <span class="hljs-string">&quot;demo-pc&quot;</span>,
-            <span class="hljs-string">&quot;endpoints&quot;</span>: [
-                <span class="hljs-string">&quot;rest://127.0.0.1:8080&quot;</span>
-            ],
-            <span class="hljs-string">&quot;status&quot;</span>: <span class="hljs-string">&quot;UP&quot;</span>,
-            <span class="hljs-string">&quot;healthCheck&quot;</span>: {
-                <span class="hljs-string">&quot;mode&quot;</span>: <span class="hljs-string">&quot;push&quot;</span>,
-                <span class="hljs-string">&quot;interval&quot;</span>: <span class="hljs-number">30</span>,
-                <span class="hljs-string">&quot;times&quot;</span>: <span class="hljs-number">3</span>
-            },
-            <span class="hljs-string">&quot;timestamp&quot;</span>: <span class="hljs-string">&quot;1520322915&quot;</span>,
-            <span class="hljs-string">&quot;modTimestamp&quot;</span>: <span class="hljs-string">&quot;1520322915&quot;</span>
-        }
-    ]
-}
-</code></pre>
+                                <h2 id="service-center-&#x8BBE;&#x8BA1;&#x539F;&#x7406;">Service-Center &#x8BBE;&#x8BA1;&#x539F;&#x7406;</h2>
+<p>Service-Center(SC)&#x662F;&#x4E00;&#x4E2A;&#x670D;&#x52A1;&#x6CE8;&#x518C;&#x4E2D;&#x5FC3;&#xFF0C;&#x5141;&#x8BB8;&#x670D;&#x52A1;&#x6CE8;&#x518C;&#x4ED6;&#x4EEC;&#x7684;&#x5B9E;&#x4F8B;&#x4FE1;&#x606F;&#x5E76;&#x53D1;&#x73B0;&#x7ED9;&#x5B9A;&#x670D;&#x52A1;&#x7684;&#x63D0;&#x4F9B;&#x8005;&#x3002;&#x4EE5;&#x4E0B;&#x7B80;&#x79F0;SC&#xFF1A;
+SC&#x4F7F;&#x7528;ETCD&#x5B58;&#x50A8;&#x5FAE;&#x670D;&#x52A1;&#x7684;&#x6240;&#x6709;&#x4FE1;&#x606F;&#x53CA;&#x5176;&#x5B9E;&#x4F8B;&#x3002;&#x4E0B;&#x9762;&#x662F;SC&#x7684;&#x5DE5;&#x4F5C;&#x539F;&#x7406;&#x548C;&#x6D41;&#x7A0B;&#x56FE;&#x3002;</p>
+<h4 id="on-startup">On StartUp</h4>
+<p>&#x5047;&#x8BBE;&#x6211;&#x4EEC;&#x7684;&#x5FAE;&#x670D;&#x52A1;&#x662F;&#x4F7F;&#x7528; <a href="https://github.com/ServiceComb/java-chassis" target="_blank">java-chassis</a> SDK&#x7F16;&#x5199;&#x7684;&#x3002;&#x56E0;&#x6B64;&#xFF0C;&#x5F53;&#x5FAE;&#x670D;&#x52A1;&#x542F;&#x52A8;&#x65F6;&#xFF0C;Java chassis SDK&#x6267;&#x884C;&#x4EE5;&#x4E0B;&#x4EFB;&#x52A1;&#x5217;&#x8868;&#x3002;</p>
+<p>1 &#x5728;&#x542F;&#x52A8;provider&#x65F6;&#x6CE8;&#x518C;&#x5FAE;&#x670D;&#x52A1;&#x5230;SC&#x3002;&#xFF08;&#x6267;&#x884C;&#x8BE5;&#x6B65;&#x7684;&#x6761;&#x4EF6;&#x662F;&#xFF1A;&#x65E2;&#x6CA1;&#x6709;&#x5728;&#x4E4B;&#x524D;&#x6CE8;&#x518C;&#xFF0C;&#x4E5F;&#x6CA1;&#x5728;sc&#x767B;&#x8BB0;&#x5B83;&#x7684;&#x5B9E;&#x4F8B;&#x4FE1;&#x606F;&#xFF0C;&#x5982;&#x5B83;&#x7684;IP&#x548C;&#x7AEF;&#x53E3;&#x4E0A;&#x8FD0;&#x884C;&#x7684;&#x5B9E;&#x4F8B;&#x4FE1;&#x606F;&#xFF09;</p>
+<p>2 SC&#x5C06;provider&#x4FE1;&#x606F;&#x5B58;&#x50A8;&#x5728;ETCD&#x4E2D;&#x3002;</p>
+<p>3 &#x88AB;&#x542F;&#x7528;&#x7684;consumer&#x68C0;&#x7D22;&#x6240;&#x6709;provider&#x5B9E;&#x4F8B;&#x7684;&#x5217;&#x8868; &#xFF08;&#x8FD9;&#x4E2A;&#x5217;&#x8868;&#x662F;&#x7531;provider&#x5FAE;&#x670D;&#x52A1;&#x540D;&#x79F0;&#x6784;&#x6210;&#xFF0C;&#x4E14;&#x4ECE;sc&#x83B7;&#x5F97;&#xFF09;</p>
+<p>4 Consumer SDK&#x5C06;provider&#x5B9E;&#x4F8B;&#x7684;&#x6240;&#x6709;&#x4FE1;&#x606F;&#x5B58;&#x50A8;&#x5728;&#x5176;&#x7F13;&#x5B58;&#x4E2D;&#x3002;</p>
+<p>5 Consumer SDK&#x521B;&#x5EFA;&#x5230;SC&#x7684;Web socket&#x8FDE;&#x63A5;&#xFF0C;&#x4EE5;&#x67E5;&#x770B;&#x6240;&#x6709;&#x63D0;&#x4F9B;&#x7A0B;&#x5E8F;&#x5B9E;&#x4F8B;&#x4FE1;&#x606F;&#xFF0C;&#x5982;&#x679C;&#x63D0;&#x4F9B;&#x8005;&#x4E2D;&#x6709;&#x4EFB;&#x4F55;&#x66F4;&#x6539;&#xFF0C;SDK&#x66F4;&#x65B0;&#x5176;&#x7F13;&#x5B58;&#x4FE1;&#x606F;&#x3002;</p>
+<p><img src="static_files/onStartup.PNG" alt="Onstartup"></p>
+<h4 id="consumer---provider-&#x4E4B;&#x95F4;&#x7684;&#x901A;&#x4FE1;">Consumer -&gt; Provider &#x4E4B;&#x95F4;&#x7684;&#x901A;&#x4FE1;</h4>
+<p>&#x4E00;&#x65E6;&#x542F;&#x52A8;&#x6210;&#x529F;&#xFF0C;&#x90A3;&#x4E48;&#x6D88;&#x8D39;&#x8005;&#x53EF;&#x4EE5;&#x5B8C;&#x7F8E;&#x5730;&#x4E0E;&#x63D0;&#x4F9B;&#x8005;&#x901A;&#x4FE1;&#xFF0C;&#x4E0B;&#x9762;&#x662F;&#x8BF4;&#x660E;&#x63D0;&#x4F9B;&#x8005;&#x548C;&#x6D88;&#x8D39;&#x8005;&#x4E4B;&#x95F4;&#x7684;&#x901A;&#x4FE1;&#x7684;&#x56FE;&#x8868;&#x3002;</p>
+<p><img src="static_files/communication.PNG" alt="Commuication"></p>
+<p>Provider&#x7A0B;&#x5E8F;&#x5B9E;&#x4F8B;&#x6BCF;&#x9694;30&#x79D2;&#x5B9A;&#x671F;&#x53D1;&#x9001;&#x5FC3;&#x8DF3;&#x4FE1;&#x53F7;&#x5230;SC&#xFF0C;&#x5982;&#x679C;SC&#x4E0D;&#x63A5;&#x6536;&#x67D0;&#x4E00;&#x4E2A;&#x5B9E;&#x4F8B;&#x7684;&#x5FC3;&#x8DF3;&#xFF0C;&#x5219;&#x8BE5;&#x5B9E;&#x4F8B;&#x4FE1;&#x606F;&#x5C06;&#x5728;ETCD&#x4E2D;&#x8FC7;&#x671F;&#xFF0C;&#x5E76;&#x4E14;&#x8BE5;provider&#x5B9E;&#x4F8B;&#x4FE1;&#x606F;&#x88AB;sc&#x79FB;&#x9664;&#x3002;Consumer&#x7531;SC&#x76D1;&#x89C6;Provider&#x5B9E;&#x4F8B;&#x7684;&#x4FE1;&#x606F;&#xFF0C;&#x5982;&#x679C;&#x6709;&#x4EFB;&#x4F55;&#x53D8;&#x5316;&#xFF0C;&#x5219;&#x66F4;&#x65B0;&#x7F13;&#x5B58;&#x3002;&#x5F53;Consumer&#x9700;&#x8981;&#x4E0E;Provider&#x901A;&#x4FE1;&#x65F6;&#xFF0C;Consumer&#x4ECE;&#x7F13;&#x5B58;&#x8BFB;&#x53D6;Provider&#x5B9E;&#x4F8B;&#x7684;endpoints&#xFF0C;&#x5E76;&#x8FDB;&#x884C;&#x8D1F;&#x8F7D;&#x5E73;&#x8861;&#x4EE5;&#x4E0E;provider&#x8005;&#x901A;&#x4FE1;&#x3002;</p>
+<p>Note: &#x8FD9;&#x4E2A;&#x6587;&#x6863;&#x662F;beta&#x9636;&#x6BB5;&#xFF0C;&#x53EF;&#x4EE5;&#x81EA;&#x7531;&#x7684;&#x5411;&#x8BE5;&#x6587;&#x6863;&#x63D0;&#x4EA4;&#x8D21;&#x732E;.</p>
 
                                 
                                 </section>
@@ -268,7 +210,7 @@
     <script>
         var gitbook = gitbook || [];
         gitbook.push(function() {
-            gitbook.page.hasChanged({"page":{"title":"Introduction","level":"1.1","depth":1,"dir":"ltr"},"config":{"plugins":[],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"language":"zh_CN","gitbook":"*"},"file":{"path":"README.md","mtime":"2018-08-27T09:25:44.830Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-08-27T09:29:27.859Z"},"basePath":".","book":{"language":"zh_CN"}});
+            gitbook.page.hasChanged({"page":{"title":"Introduction","level":"1.1","depth":1,"dir":"ltr"},"config":{"plugins":[],"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"sharing":{"facebook":true,"twitter":true,"google":false,"weibo":false,"instapaper":false,"vk":false,"all":["facebook","google","twitter","weibo","instapaper"]},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56}},"structure":{"langs":"LANGS.md","readme":"design-zh.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"language":"zh_CN","gitbook":"*"},"file":{"path":"design-zh.md","mtime":"2018-08-28T07:55:59.442Z","type":"markdown"},"gitbook":{"version":"3.2.3","time":"2018-08-28T07:57:20.311Z"},"basePath":".","book":{"language":"zh_CN"}});
         });
     </script>
 </div>
