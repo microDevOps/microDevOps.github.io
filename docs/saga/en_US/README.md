@@ -1,5 +1,4 @@
 # Saga User Guide
-
 ## Prerequisites
 You will need:
 1. [JDK 1.8][jdk]

@@ -1,5 +1,4 @@
 # Saga 用户指南
-
 ## 准备环境
 1. 安装[JDK 1.8][jdk]
 2. 安装[Maven 3.x][maven]
