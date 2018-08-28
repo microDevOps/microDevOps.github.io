@@ -1,24 +1,24 @@
-# Prepare the local development environment
+# 安装本地开发环境
 
-The tools required to install the development environment include JDK, Maven, Eclipse, and IDEA. If you already have these development tools installed, skip this section.
+应用开发环境所需安装的工具包括JDK、Maven、Eclipse 和 IDEA 。如果已经安装了这些开发工具，请跳过本节。
 
-## JDK version and installation steps
+## JDK约束及安装步骤
 
-1.JDK version
+1.JDK版本
 
-The JDK version requires 1.8 or more.
+JDK版本要求1.8以上。
 
-2.JDK download
+2.JDK下载
 
-Please go to the official address of JDK version 1.8 to download.
+请到JDK 1.8版本的官方地址下载。
 
-3.JDK installation
+3.JDK安装
 
-After downloading the JDK installation package on the official website, select the appropriate installation path to install the JDK.
+在官网下载JDK安装包后，选择合适的安装路径安装JDK。
 
-Here is the windows system as an example:
+这里以windows系统为例：
 
-Set the JAVA\_HOME environment variable to point to the Java installation directory. Add %JAVA\_HOME%\bin to the system path path. After the environment variable is configured, use the java -version command to verify whether the installation is successful. The windows environment is echoed as follows:
+设置JAVA\_HOME环境变量，指向Java安装目录。将%JAVA\_HOME%\bin添加到系统路径path中。环境变量配置完成后，使用java -version命令验证是否安装成功，windows环境下回显如下：
 
 ```
 C:\Users\h00407576> java -version      
@@ -27,33 +27,33 @@ C:\Users\h00407576> java -version
  Java HotSpot(TM) 64-Bit Server VM (build 25.121-b13, mixed mode)
 ```
 
-## Maven installation steps
+## Maven安装步骤
 
-Maven is a development tool that integrates project management, code compilation, project management and more.
+Maven是一款集项目管理、代码编译、工程管理等等能力于一体的开发工具。
 
-### **Prerequisites**
+### **前提条件**
 
-The JDK has been installed successfully.
+JDK已经安装成功。
 
-### **installation steps**
+### **安装步骤**
 
-a. Download the Maven installation package at the official address.
+a.在官方地址下载Maven安装包。
 
-b. (Optional) Download the Eclipse plugin m2eclipse at the official address. The latest Eclipse version comes with a Maven plugin, so you don't have to download this plugin.
+b.（可选）在官方地址下载Eclipse插件m2eclipse。最新的Eclipse版本中带有Maven插件，则不用下载此插件
 
-c. Unzip the Maven installation package to the native path.
+c.解压Maven安装包到本机路径。
 
-d. Set environment variables.
+d.设置环境变量。
 
-* Set the M2\_HOME environment variable to point to the Maven installation directory.
+* 设置M2\_HOME环境变量，指向Maven安装目录。
 
-* Add %M2\_HOME%\bin to the system path path.
+* 将%M2\_HOME%\bin添加到系统路径path中。
 
-e. (Optional) Set a local repository path to hold the plug-ins and dependent copies obtained from the remote repository.
+e.（可选）设置本地仓库路径，用于保存从远程仓库获取的插件和依赖的副本。
 
-Here is the path D:\maven\repository. Find the settings.xml file in /conf and set localRepository to D:\maven\repository
+这里以路径D:\maven\repository为例。在/conf中找到settings.xml文件，设置localRepository为D:\maven\repository
 
-f. (Optional) In order to quickly download various dependencies, it is recommended to configure the central repository.
+f. （可选）要想项目能够快速的下载各种依赖，建议配置下中心仓库。
 
 ```
  <mirror>
@@ -64,9 +64,9 @@ f. (Optional) In order to quickly download various dependencies, it is recommend
   </mirror>
 ```
 
-g. Results verification
+g.结果验证
 
-Use the mvn -version command to verify that the installation is successful. The windows environment is echoed as follows:
+使用mvn -version命令验证是否安装成功，windows环境下回显如下：
 
 ```
 C:\Users\h00407576>mvn -version        
@@ -79,46 +79,46 @@ C:\Users\h00407576>mvn -version
  OS name: "windows 7", version: "6.1", arch: "amd64", family: "dos"
 ```
 
-## Eclipse installation
+## Eclipse安装
 
-### **Prerequisites**
+### **前提条件**
 
-a.JDK has been installed.
+a.JDK已经安装。
 
-b.Maven is already installed.
+b.Maven已经安装。
 
-### **installation steps**
+### **安装步骤**
 
-a. Download the Eclipse installation package at the official address.
+a.在官方地址下载Eclipse安装包。
 
-b. Install Eclipse to the machine.
+b.安装Eclipse到本机。
 
-c. (Optional) Extract the plugin m2eclipse described in the previous Maven installation to the plugins and features directory in the Eclipse installation directory. The latest Eclipse version
+c.（可选）将之前Maven安装中介绍的插件m2eclipse解压到Eclipse安装目录下的plugins和features目录。最新的Eclipse版本
 
-With the Maven plugin, don't do this
+中带有Maven插件，不要进行此操作
 
-d. Start Eclipse, configure jre, maven settings, and the default encoding format is utf-8.
+d.启动Eclipse，配置jre、maven settings以及默认编码格式为utf-8。
 
 
 
-## IDEA installation
+## IDEA安装
 
-### **Prerequisites**
+### **前提条件**
 
-a.JDK has been installed.
+a.JDK已经安装。
 
-b.Maven is already installed.
+b.Maven已经安装。
 
-### **installation steps**
+### **安装步骤**
 
-a. Download the IDEA installation package on the official website, the paid version or the community version according to individual needs.
+a. 在官方网站下载 IDEA 安装包，收费版或者社区版的按个人需求。
 
-b. Set the encoding format to utf-8.
+b. 设置编码格式都为 utf-8。
 
-Open IDEA and select File -> Settings -> Editor -> File Encoding
-Change project Encoding and default encoding for properties files to utf-8.
+打开IDEA，选择 File -> Settings -> Editor -> File Encoding
+把 project Encoding 和 default encoding for properties files 改为 utf-8。
 
-c. Set up maven configuration
+c. 设置maven 配置
 
-Open IDEA and select File -> Settings -> Build, Execution, Deployment -> Bulid Tools -> Maven
-Note configuring Maven home directory and User settings file
+打开IDEA，选择 File -> Settings -> Build，Execution,Deployment -> Bulid Tools -> Maven
+注意配置 Maven home directory  和 User settings file

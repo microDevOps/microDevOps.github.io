@@ -1,29 +1,29 @@
-# CORS mechanism
+# CORS机制
 
-## Concept Description
+## 概念阐述
 
-Cross-Origin Resource Sharing (CORS) allows Web servers to perform cross-domain access control, enabling browsers to more securely transfer data across domains.
+跨域资源共享(CORS, Cross-Origin Resource Sharing)允许Web服务器进行跨域访问控制，使浏览器可以更安全地进行跨域数据传输。
 
-## Scene Description
+## 场景描述
 
-When the user needs to send REST requests from across the browser, the CORS mechanism may be used. The microservices that receive cross-domain requests need to enable CORS support.
+当用户需要从浏览器上跨域发送REST请求时就有可能要用到CORS机制，接收跨域请求的微服务需要开启CORS支持。
 
-## Configuration instructions
+## 配置说明
 
-The CORS function is configured in the microservice.yaml file. The configuration items are described in the following table.
+CORS功能在microservice.yaml文件中配置，配置项见下表所述。
 
-| Configuration Item | Default Value | Range of Value | Required | Meaning |
+| 配置项 | 默认值 | 取值范围 | 是否必选 | 含义 | 注意 |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| servicecomb.cors.enabled | `false` | `true`/`false` | No | Whether to enable CORS function | - |
-| servicecomb.cors.origin | `*` | - | No | Access-Control-Allow-Origin | - |
-| servicecomb.cors.allowCredentials | `false` | `true`/`false` | No | Access-Control-Allow-Credentials | According to the CORS standard, when Access-Control-Allow-Credentials is set to `true`, Access- Control-Allow-Origin cannot be set to "*", otherwise an exception will be thrown |
-| servicecomb.cors.allowedHeader | None | - | No | Access-Control-Allow-Headers | Multiple values ​​separated by commas |
-| servicecomb.cors.allowedMethod | None | - | No | Access-Control-Allow-Methods | Multiple values ​​separated by commas |
-| servicecomb.cors.exposedHeader | None | - | No | Access-Control-Expose-Headers | Multiple values ​​separated by commas |
-| servicecomb.cors.maxAge | None | (0,2147483647], Integer | No | Access-Control-Max-Age | The unit is seconds. If the user does not configure this, there is no Access-Control-Max in the CORS response. Age |
+| servicecomb.cors.enabled | `false` | `true`/`false` | 否 | 是否开启CORS功能 | - |
+| servicecomb.cors.origin | `*` | - | 否 | Access-Control-Allow-Origin | - |
+| servicecomb.cors.allowCredentials | `false` | `true`/`false` | 否 | Access-Control-Allow-Credentials | 根据CORS标准，当Access-Control-Allow-Credentials设置为`true`时，Access-Control-Allow-Origin不可设置为"*"，否则将会抛出异常 |
+| servicecomb.cors.allowedHeader | 无 | - | 否 | Access-Control-Allow-Headers | 多个值使用逗号分隔 |
+| servicecomb.cors.allowedMethod | 无 | - | 否 | Access-Control-Allow-Methods | 多个值使用逗号分隔 |
+| servicecomb.cors.exposedHeader | 无 | - | 否 | Access-Control-Expose-Headers | 多个值使用逗号分隔 |
+| servicecomb.cors.maxAge | 无 | (0,2147483647]，整型 | 否 | Access-Control-Max-Age | 单位是秒，如果用户不配置此项，则CORS应答中没有Access-Control-Max-Age |
 
 
-## Sample Code
+## 示例代码
 
 ```yaml
 servicecomb:

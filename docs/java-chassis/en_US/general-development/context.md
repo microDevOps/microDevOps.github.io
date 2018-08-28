@@ -1,31 +1,31 @@
-# Delivery Context Control Message
+# 使用Context传递控制消息
 
-ServiceComb provides a Context to delivery data between microservices. Context is a key/value pair and can only use data of type String. Since the Context is serialized into the Json format and passed through the HTTP header, characters other than ASCII are not supported. Other characters require the developer to encode and pass the code. The Context is passed on the request chain in a single request and does not need to be reset. The functions such as trace id of [access log](../build-provider/access-log-configuration.md) are implemented based on this feature.
+ServiceComb提供了Context在微服务之间传递数据。Context是key/value对，只能够使用String类型的数据。由于Context会序列化为json格式并通过HTTP Header传递，因此也不支持ASCII之外的字符，其他字符需要开发者先自行编码再传递。Context在一次请求中，会在请求链上传递，不需要重新设置。[access log](../build-provider/access-log-configuration.md)的trace id等功能都基于这个特性实现的。
 
-## Scene Description
-* In the authentication scenario, after the Edge Service authentication is passed, the session ID, username, and other information need to be passed to the microservice to implement authentication and other logic.
-* Grayscale publishing scenarios, need to be combined with custom tags to achieve drainage, tag information needs to be passed to the microservices
+## 场景描述
+* 在认证场景，Edge Service认证通过以后，需要将会话ID、用户名称等信息传递给微服务，实现鉴权等逻辑
+* 灰度发布场景，需要结合自定义的tag实现引流，tag信息需要传递给微服务
 
-## Use Reference
+## 使用参考
 
-* Get and set the Context in Handler
+* 在Hanlder中获取和设置Context
 
-The Handler contains the Invocation object, which can be called directly in the invocation.addContext and invocation.getContext settings.
+Handler包含了Invocation对象，可以直接调用invocation.addContext和invocation.getContext设置。
 
-* Get Context in the service interface
+* 在服务接口中获取Context
 
-Inject through the interface
+通过接口注入
 ```
 public Response cseResponse(InvocationContext c1)
 ```
-or
+或者
 ```
 ContextUtils.getInvocationContext()
 ```
 
-* Set the Context in the Edge Service
+* 在Edge Service中设置Context
 
-By overloading EdgeInvocation
+通过重载EdgeInvocation
 ```
 EdgeInvocation edgeInvocation = new EdgeInvocation() {
   protected void createInvocation() {
